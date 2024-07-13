@@ -22,14 +22,32 @@ function addTask(){
 
     //clear the inputbox after a task has been added
     inputBox.value = ""; 
+
+    //Call the saveData any time the task is added to the list
+    saveData();
 }
 
 //Click function on the x button
 listContainer.addEventListener("click", function(e){
     if (e.target.tagName === "LI"){
         e.target.classList.toggle("checked");
+        saveData();
     }
     else if (e.target.tagName ==="SPAN"){
         e.target.parentElement.remove();
+        saveData();
     }
 }, false);
+
+//Function to save data even if the browser is refreshed
+function saveData () {
+    localStorage.setItem("data", listContainer.innerHTML);
+}
+
+//Display the data every time the browser is repoened
+function showTask() {
+    listContainer.innerHTML = localStorage.getItem("data");
+}
+//call the showTask Function
+showTask();
+
